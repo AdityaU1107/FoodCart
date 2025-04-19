@@ -2,7 +2,7 @@
 //  OutletVC.swift
 //  FoodCart
 //
-//  Created by manas dutta on 18/04/25.
+//  Created by Aditya on 18/04/25.
 //
 
 import UIKit
@@ -137,7 +137,7 @@ extension OutletVC : UICollectionViewDelegate , UICollectionViewDataSource{
         }else if collectionView == recommendCollectionView {
             return popularItems.count
         }else if collectionView == categoryFilterCollectionView {
-            return 3
+            return 1
         }
         return 3
     }

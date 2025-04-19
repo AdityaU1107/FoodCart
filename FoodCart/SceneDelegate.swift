@@ -2,7 +2,7 @@
 //  SceneDelegate.swift
 //  FoodCart
 //
-//  Created by manas dutta on 17/04/25.
+//  Created by Aditya on 17/04/25.
 //
 
 import UIKit
