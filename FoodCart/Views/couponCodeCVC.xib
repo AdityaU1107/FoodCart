@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23094" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23084"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="couponCodeCVC" id="gTV-IL-0wX" customClass="couponCodeCVC" customModule="FoodCart" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="337" height="56"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                <rect key="frame" x="0.0" y="0.0" width="337" height="56"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vZb-XP-gmv">
+                        <rect key="frame" x="0.0" y="0.0" width="337" height="56"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Coupon" translatesAutoresizingMaskIntoConstraints="NO" id="fhq-Hk-fEP">
+                                <rect key="frame" x="10" y="14" width="28" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="U4I-9O-WBh"/>
+                                </constraints>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vLg-HW-ZQA">
+                                <rect key="frame" x="48" y="5" width="279" height="46"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Get 50% Off up to ₹140" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wym-bF-rDg">
+                                        <rect key="frame" x="0.0" y="0.0" width="279" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="16"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Use PVRFOOD50" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2aC-e4-3Jc">
+                                        <rect key="frame" x="0.0" y="23" width="279" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="fhq-Hk-fEP" firstAttribute="leading" secondItem="vZb-XP-gmv" secondAttribute="leading" constant="10" id="1Bu-Es-6GC"/>
+                            <constraint firstAttribute="bottom" secondItem="vLg-HW-ZQA" secondAttribute="bottom" constant="5" id="6wz-oL-VJ1"/>
+                            <constraint firstItem="vLg-HW-ZQA" firstAttribute="top" secondItem="vZb-XP-gmv" secondAttribute="top" constant="5" id="CoS-c5-42s"/>
+                            <constraint firstAttribute="trailing" secondItem="vLg-HW-ZQA" secondAttribute="trailing" constant="10" id="UXg-ht-cLl"/>
+                            <constraint firstItem="vLg-HW-ZQA" firstAttribute="leading" secondItem="fhq-Hk-fEP" secondAttribute="trailing" constant="10" id="Wko-0V-9E1"/>
+                            <constraint firstItem="fhq-Hk-fEP" firstAttribute="centerY" secondItem="vZb-XP-gmv" secondAttribute="centerY" id="Zvm-PR-Yp1"/>
+                        </constraints>
+                    </view>
+                </subviews>
+            </view>
+            <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="vZb-XP-gmv" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="A5t-FP-ODe"/>
+                <constraint firstAttribute="bottom" secondItem="vZb-XP-gmv" secondAttribute="bottom" id="EU5-Gg-2dt"/>
+                <constraint firstItem="vZb-XP-gmv" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="elR-mM-jXM"/>
+                <constraint firstAttribute="trailing" secondItem="vZb-XP-gmv" secondAttribute="trailing" id="f1i-ZE-AVN"/>
+            </constraints>
+            <size key="customSize" width="337" height="56"/>
+            <point key="canvasLocation" x="348.85496183206106" y="-9.1549295774647899"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="Coupon" width="28" height="28"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>
