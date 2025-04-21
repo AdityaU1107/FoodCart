@@ -140,6 +140,7 @@
                 <outlet property="Pricelabel" destination="V2O-2u-wTk" id="i9g-ku-srk"/>
                 <outlet property="StepperView" destination="HGY-jD-ikB" id="W3c-zb-6jz"/>
                 <outlet property="countLabel" destination="Qvz-Tv-pRn" id="dkh-wl-lY7"/>
+                <outlet property="customisableBtn" destination="oI3-1f-7lM" id="HvY-3R-XIg"/>
                 <outlet property="decrementBtn" destination="9t7-fA-ciV" id="rxW-Qq-lMR"/>
                 <outlet property="imageHolderView" destination="FXi-Q4-Dtw" id="4f3-ji-OaE"/>
                 <outlet property="incrementBtn" destination="kiI-cD-uST" id="Rq3-y1-ewy"/>

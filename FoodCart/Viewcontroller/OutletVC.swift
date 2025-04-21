@@ -41,7 +41,7 @@ class OutletVC: UIViewController,CLLocationManagerDelegate, locationDelegate {
         recommendCollectionView.register(UINib(nibName: "foodItemCVC", bundle: .main), forCellWithReuseIdentifier: "foodItemCVC")
         categoryFilterCollectionView.register(UINib(nibName: "filterCVC", bundle: .main), forCellWithReuseIdentifier: "filterCVC")
         fnbListTableview.register(UINib(nibName: "fnbItemsTVC", bundle: .main), forCellReuseIdentifier: "fnbItemsTVC")
-        
+        TotalAmountLbl.text = "₹00.00"
         // Location Setup
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -125,92 +125,125 @@ class OutletVC: UIViewController,CLLocationManagerDelegate, locationDelegate {
         }
     }
     
+    func updateTotalBill() {
+        DispatchQueue.main.async {
+            let total = self.cartItems.reduce(0) { $0 + (Int(Double($1.price)) * $1.quantity) }
+            print("🧮 Calculated total: \(total), Items: \(self.cartItems.count)")
+        
+            self.TotalAmountLbl.text = "₹\(total)"
+        }
+    }
+    
+    func updateCart(with cartItem: CartItem) {
+        if let index = cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
+            if cartItem.quantity == 0 {
+                cartItems.remove(at: index)
+            } else {
+                cartItems[index].quantity = cartItem.quantity
+            }
+        } else {
+            if cartItem.quantity > 0 {
+                cartItems.append(cartItem)
+            }
+        }
+
+        // Optional: Print updated JSON
+        if let jsonData = try? JSONEncoder().encode(cartItems),
+           let jsonString = String(data: jsonData, encoding: .utf8) {
+            print("🛒 Updated Cart JSON:\n\(jsonString)")
+        }
+
+        updateTotalBill() // 💰 call total bill update here
+    }
     
 }
 
-extension OutletVC : UICollectionViewDelegate , UICollectionViewDataSource{
+extension OutletVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == repeatCollectionView{
+        if collectionView == repeatCollectionView {
             return repeatItems.count
-        } else if collectionView == couponCollectionView{
+        } else if collectionView == couponCollectionView {
             return 3
-        }else if collectionView == recommendCollectionView {
+        } else if collectionView == recommendCollectionView {
             return popularItems.count
-        }else if collectionView == categoryFilterCollectionView {
+        } else if collectionView == categoryFilterCollectionView {
             return 1
         }
         return 3
     }
-    
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if collectionView == repeatCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodItemCVC", for: indexPath) as! foodItemCVC
             let item = repeatItems[indexPath.row]
-            
-            // Styling
+
             cell.layer.borderWidth = 1
             cell.layer.cornerRadius = 10
             cell.layer.borderColor = UIColor.gray.cgColor
-            
-            // Configure UI
+
             cell.configure(with: item)
-            
-            // Cart action
+
             cell.addToCartAction = { [weak self] cartItem in
                 guard let self = self else { return }
-                if let index = self.cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
-                    self.cartItems[index].quantity = cartItem.quantity
+
+                if cartItem.quantity == 0 {
+                    self.cartItems.removeAll { $0.ItemID == cartItem.ItemID }
                 } else {
-                    self.cartItems.append(cartItem)
+                    if let index = self.cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
+                        self.cartItems[index].quantity = cartItem.quantity
+                    } else {
+                        self.cartItems.append(cartItem)
+                    }
                 }
 
-                // Optional: print JSON
                 if let jsonData = try? JSONEncoder().encode(self.cartItems),
                    let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print("🛒 Cart JSON:\n\(jsonString)")
+                    print("🛒 Updated Cart JSON:\n\(jsonString)")
                 }
+                self.updateTotalBill()
             }
 
             return cell
-            
+
         } else if collectionView == recommendCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "foodItemCVC", for: indexPath) as! foodItemCVC
             let item = popularItems[indexPath.row]
-            
-            // Styling
+
             cell.layer.borderWidth = 1
             cell.layer.cornerRadius = 10
             cell.layer.borderColor = UIColor.gray.cgColor
-            
-            // Configure UI
+
             cell.configure(with: item)
-            
-            // Cart action
+
             cell.addToCartAction = { [weak self] cartItem in
                 guard let self = self else { return }
-                if let index = self.cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
-                    self.cartItems[index].quantity = cartItem.quantity
+
+                if cartItem.quantity == 0 {
+                    self.cartItems.removeAll { $0.ItemID == cartItem.ItemID }
                 } else {
-                    self.cartItems.append(cartItem)
+                    if let index = self.cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
+                        self.cartItems[index].quantity = cartItem.quantity
+                    } else {
+                        self.cartItems.append(cartItem)
+                    }
                 }
 
                 if let jsonData = try? JSONEncoder().encode(self.cartItems),
                    let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print("🛒 Cart JSON:\n\(jsonString)")
+                    print("🛒 Updated Cart JSON:\n\(jsonString)")
                 }
+                self.updateTotalBill()
             }
 
             return cell
-        }
-        
-        // Your other collectionViews...
-        else if collectionView == couponCollectionView {
+
+        } else if collectionView == couponCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "couponCodeCVC", for: indexPath) as! couponCodeCVC
             cell.layer.cornerRadius = 10
             return cell
-            
+
         } else if collectionView == categoryFilterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "filterCVC", for: indexPath) as! filterCVC
             cell.layer.borderWidth = 1
@@ -221,9 +254,6 @@ extension OutletVC : UICollectionViewDelegate , UICollectionViewDataSource{
 
         return UICollectionViewCell()
     }
-    
-    
-    
 }
 
 extension OutletVC : UICollectionViewDelegateFlowLayout{
@@ -260,36 +290,43 @@ extension OutletVC : UICollectionViewDelegateFlowLayout{
     }
 }
 
-extension OutletVC : UITableViewDelegate, UITableViewDataSource {
+extension OutletVC: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return fnbItems.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "fnbItemsTVC", for: indexPath) as! fnbItemsTVC
-            let item = fnbItems[indexPath.row]
+        let item = fnbItems[indexPath.row]
 
-            // Configure cell
-            cell.configure(with: item)
+        // Configure cell
+        cell.configure(with: item)
 
-            // Handle cart update
-            cell.addToCartAction = { [weak self] cartItem in
-                guard let self = self else { return }
+        // Handle cart update or removal
+        cell.addToCartAction = { [weak self] cartItem in
+            guard let self = self else { return }
 
+            // If quantity is 0, remove the item from the cart
+            if cartItem.quantity == 0 {
+                self.cartItems.removeAll { $0.ItemID == cartItem.ItemID }
+            } else {
+                // Add new or update existing item
                 if let index = self.cartItems.firstIndex(where: { $0.ItemID == cartItem.ItemID }) {
                     self.cartItems[index].quantity = cartItem.quantity
                 } else {
                     self.cartItems.append(cartItem)
                 }
-                
-                // Optional: Print cart JSON
-                if let jsonData = try? JSONEncoder().encode(self.cartItems),
-                   let jsonString = String(data: jsonData, encoding: .utf8) {
-                    print("🛒 Cart JSON:\n\(jsonString)")
-                }
             }
+
+            // Optional: Print updated cart as JSON
+            if let jsonData = try? JSONEncoder().encode(self.cartItems),
+               let jsonString = String(data: jsonData, encoding: .utf8) {
+                print("🛒 Updated Cart JSON:\n\(jsonString)")
+            }
+            self.updateTotalBill()
+        }
+
         return cell
     }
-    
-    
 }

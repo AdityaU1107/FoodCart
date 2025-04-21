@@ -11,6 +11,7 @@ class fnbItemsTVC: UITableViewCell {
     
     @IBOutlet weak var imageHolderView: UIView!
     @IBOutlet weak var AddBtn: UIButton!
+    @IBOutlet weak var customisableBtn: UIButton!
     
     @IBOutlet weak var StepperView: UIStackView!
     @IBOutlet weak var decrementBtn: UIButton!
@@ -65,12 +66,24 @@ class fnbItemsTVC: UITableViewCell {
     }
 
     func configure(with item: ListOfFnbItem) {
-            currentItem = item
-            productlabel.text = item.itemName
-            Pricelabel.text = "₹\(item.itemRate)"
-            productImageView.image = UIImage(named: item.itemImageURL)
-        //vegNonvegcollectionView.image = UIImage(named: item.foodType.lowercased() == "veg" ? "veg" : "nonVeg")
+        currentItem = item
+        
+        productlabel.text = item.itemName
+        Pricelabel.text = "₹\(item.itemRate)"
+        productImageView.image = UIImage(named: item.itemImageURL)
+        vegNonvegcollectionView.image = UIImage(named: item.foodType.rawValue == "veg" ? "veg" : "nonVeg")
+        
+        // Customisable Button Logic
+        if item.addOnItems.isEmpty {
+            customisableBtn.isEnabled = false
+            customisableBtn.setTitle("", for: .normal)
+            customisableBtn.backgroundColor = .clear // Optional: hide background if needed
+        } else {
+            customisableBtn.isEnabled = true
+            customisableBtn.setTitle("Customisable", for: .normal)
+            //customisableBtn.backgroundColor = .systemYellow // Optional styling
         }
+    }
     
     // MARK: - UI Update Logic
     func updateStepperView() {
